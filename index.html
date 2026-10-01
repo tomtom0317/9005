@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>戦国47 都道府県クエスト</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+html,body{margin:0;padding:0;background:#1a120d;color:#fff8e7;font-family:Arial,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+.wrap{max-width:720px;margin:auto;padding:8px}.panel{background:#2a1c13;border:3px solid #8b6a3f;border-radius:14px;padding:10px;box-shadow:0 7px 22px #0008}
+h1{text-align:center;margin:2px 0 4px;font-size:27px;color:#ffd66b;text-shadow:2px 2px #5d2a16}
+.sub{text-align:center;font-weight:bold;line-height:1.5;font-size:14px;color:#f5e6c8}
+.status{display:table;width:100%;table-layout:fixed;border-spacing:5px;margin-top:8px}.box{display:table-cell;background:#4a3324;border-radius:8px;padding:7px;text-align:center;font-size:12px;font-weight:bold}.num{display:block;color:#ffe27a;font-size:19px;margin-top:2px}
+.battle{margin-top:8px;background:#0e151b;border:3px solid #684d30;border-radius:10px;padding:7px}
+.scene{position:relative;height:245px;background:#20313b;border-radius:8px;overflow:hidden;border:2px solid #6f7a73}
+.scene:before{content:"";position:absolute;left:0;right:0;bottom:0;height:78px;background:#52613e}
+.scene:after{content:"";position:absolute;left:0;right:0;bottom:76px;height:5px;background:#81915d}
+.moon{position:absolute;right:20px;top:18px;width:50px;height:50px;border-radius:50%;background:#f5e6a8;opacity:.9}
+.castle{position:absolute;left:15px;bottom:75px;width:110px;height:95px}
+.roof{position:absolute;left:8px;width:94px;height:17px;background:#2d2d2d;transform:skewX(-18deg);-webkit-transform:skewX(-18deg)}
+.r1{bottom:55px}.r2{bottom:30px;left:18px;width:74px}.r3{bottom:8px;left:27px;width:56px}
+.floor{position:absolute;background:#d5c7a6;border:3px solid #5d4930}.f1{left:20px;bottom:42px;width:70px;height:22px}.f2{left:28px;bottom:18px;width:54px;height:23px}.f3{left:35px;bottom:0;width:40px;height:20px}
+.enemyName{position:absolute;left:126px;right:8px;top:7px;text-align:center;font-size:18px;font-weight:bold;color:#fff}
+#enemyCanvas{position:absolute;left:58%;top:43px;margin-left:-70px;width:140px;height:140px;image-rendering:pixelated}
+.hpRow{position:absolute;left:130px;right:10px;bottom:15px;height:27px;background:#111;border:2px solid #8f8f8f;border-radius:7px;padding:3px}.hpBar{height:100%;background:#25b34b;border-radius:3px}.hpText{position:absolute;left:0;right:0;top:2px;text-align:center;font-size:14px;font-weight:bold;text-shadow:1px 1px #000}
+.questionBox{margin-top:8px;background:#f5e2ad;color:#3f2c14;border:3px solid #a87a32;border-radius:10px;padding:10px;text-align:center}
+.mode{font-size:14px;font-weight:bold;color:#7b4f1d}.question{font-size:31px;font-weight:bold;margin-top:4px;line-height:1.3}.kana{font-size:18px;color:#6b4423}
+.timeWrap{height:14px;background:#e5e7eb;border-radius:8px;overflow:hidden;margin-top:7px}.timeBar{height:100%;background:#22c55e}.speed{font-size:13px;font-weight:bold;margin-top:4px}
+.answers{display:table;width:100%;table-layout:fixed;border-spacing:6px;margin-top:8px}.answerCell{display:table-cell}.answer{width:100%;border:0;border-radius:10px;padding:13px 4px;background:#8b1e1e;color:#fff;font-size:19px;font-weight:bold;box-shadow:0 4px 0 #4a0f0f}.answer:active{position:relative;top:2px;box-shadow:0 2px 0 #4a0f0f}
+.msg{min-height:60px;margin-top:8px;background:#3a2a1d;border:2px solid #6f5235;border-radius:9px;padding:8px;text-align:center;font-size:16px;font-weight:bold;line-height:1.45}
+.mapTitle{text-align:center;margin-top:8px;font-weight:bold;color:#f7dda1}.map{display:table;width:100%;table-layout:fixed;border-spacing:3px;margin-top:4px}.mcell{display:table-cell;height:29px;background:#604a39;border-radius:5px;text-align:center;vertical-align:middle;font-size:10px;font-weight:bold}.mcell.done{background:#d8ac3f;color:#2b1b0f}.mcell.now{background:#db4b3f}.mcell.boss{background:#6d28d9}
+.actions{display:table;width:100%;table-layout:fixed;border-spacing:6px;margin-top:7px}.acell{display:table-cell}.small{width:100%;border:0;border-radius:8px;padding:9px 4px;background:#6b5a49;color:#fff;font-size:13px;font-weight:bold}#bgm.on{background:#477a4f}
+.overlay{display:none;position:fixed;inset:0;background:rgba(22,13,7,.96);z-index:100}.obox{position:absolute;left:7%;top:15%;width:86%;max-width:440px;background:#2a1c13;border:3px solid #a78142;border-radius:14px;padding:18px;text-align:center}.big{font-size:72px}.obox h2{font-size:27px;color:#ffe078;margin:5px}.obox p{font-size:18px;line-height:1.6;font-weight:bold}.primary{width:100%;border:0;border-radius:10px;padding:13px;background:#9b2424;color:#fff;font-size:18px;font-weight:bold;margin-top:7px}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:90}.spark{position:absolute;width:8px;height:12px}.damage{position:fixed;z-index:95;font-size:30px;font-weight:bold;color:#ffe44d;text-shadow:2px 2px #7c2d12;pointer-events:none}
+@media(max-width:430px){.scene{height:225px}.question{font-size:27px}.answer{font-size:17px;padding:12px 2px}.wrap{padding:5px}h1{font-size:23px}#enemyCanvas{width:125px;height:125px;margin-left:-62px}.castle{transform:scale(.85);-webkit-transform:scale(.85);transform-origin:left bottom;-webkit-transform-origin:left bottom}}
+</style>
+</head>
+<body>
+<div id="fx"></div>
+<div class="wrap"><div class="panel">
+<h1>🏯 戦国47 都道府県クエスト</h1>
+<div class="sub">47の くにを めぐって、都道府県(とどうふけん)の なまえを おぼえよう！<br>すばやく せいかいすると、こうげきりょくアップ！</div>
+
+<div class="status">
+ <div class="box">くに<span id="stageNo" class="num">1/47</span></div>
+ <div class="box">スコア<span id="score" class="num">0</span></div>
+ <div class="box">れんぞく<span id="combo" class="num">0</span></div>
+ <div class="box">せいは<span id="cleared" class="num">0</span></div>
+</div>
+
+<div class="battle">
+ <div class="scene">
+   <div class="moon"></div>
+   <div class="castle"><div class="roof r1"></div><div class="floor f1"></div><div class="roof r2"></div><div class="floor f2"></div><div class="roof r3"></div><div class="floor f3"></div></div>
+   <div id="enemyName" class="enemyName"></div>
+   <canvas id="enemyCanvas" width="80" height="80"></canvas>
+   <div class="hpRow"><div id="hpBar" class="hpBar"></div><div id="hpText" class="hpText"></div></div>
+ </div>
+
+ <div class="questionBox">
+   <div id="mode" class="mode"></div>
+   <div id="question" class="question"></div>
+   <div id="kana" class="kana"></div>
+   <div class="timeWrap"><div id="timeBar" class="timeBar"></div></div>
+   <div id="speed" class="speed">はやく こたえると 大ダメージ！</div>
+ </div>
+
+ <div id="answers" class="answers"></div>
+ <div id="msg" class="msg">せいかいを えらんで しろを せめよう！</div>
+</div>
+
+<div class="mapTitle">🗾 天下統一マップ</div>
+<div id="map" class="map"></div>
+
+<div class="actions">
+ <div class="acell"><button id="restart" class="small">🔄 はじめから</button></div>
+ <div class="acell"><button id="sound" class="small">🔊 SE ON</button></div>
+ <div class="acell"><button id="bgm" class="small">🎵 BGM OFF</button></div>
+</div>
+</div></div>
+
+<div id="stageClear" class="overlay"><div class="obox"><div class="big">🏯✨</div><h2>せいは！</h2><p id="stageText"></p><button id="nextStage" class="primary">つぎの くにへ</button></div></div>
+<div id="allClear" class="overlay"><div class="obox"><div class="big">👑🗾</div><h2>天下統一！</h2><p>47の都道府県を ぜんぶ せいは！<br>都道府県マスター！</p><button id="again" class="primary">もういちど</button></div></div>
+
+<script>
+(function(){
+"use strict";
+var PREFS=[{"name": "北海道", "kana": "ほっかいどう", "region": "北海道"}, {"name": "青森県", "kana": "あおもりけん", "region": "東北"}, {"name": "岩手県", "kana": "いわてけん", "region": "東北"}, {"name": "宮城県", "kana": "みやぎけん", "region": "東北"}, {"name": "秋田県", "kana": "あきたけん", "region": "東北"}, {"name": "山形県", "kana": "やまがたけん", "region": "東北"}, {"name": "福島県", "kana": "ふくしまけん", "region": "東北"}, {"name": "茨城県", "kana": "いばらきけん", "region": "関東"}, {"name": "栃木県", "kana": "とちぎけん", "region": "関東"}, {"name": "群馬県", "kana": "ぐんまけん", "region": "関東"}, {"name": "埼玉県", "kana": "さいたまけん", "region": "関東"}, {"name": "千葉県", "kana": "ちばけん", "region": "関東"}, {"name": "東京都", "kana": "とうきょうと", "region": "関東"}, {"name": "神奈川県", "kana": "かながわけん", "region": "関東"}, {"name": "新潟県", "kana": "にいがたけん", "region": "中部"}, {"name": "富山県", "kana": "とやまけん", "region": "中部"}, {"name": "石川県", "kana": "いしかわけん", "region": "中部"}, {"name": "福井県", "kana": "ふくいけん", "region": "中部"}, {"name": "山梨県", "kana": "やまなしけん", "region": "中部"}, {"name": "長野県", "kana": "ながのけん", "region": "中部"}, {"name": "岐阜県", "kana": "ぎふけん", "region": "中部"}, {"name": "静岡県", "kana": "しずおかけん", "region": "中部"}, {"name": "愛知県", "kana": "あいちけん", "region": "中部"}, {"name": "三重県", "kana": "みえけん", "region": "近畿"}, {"name": "滋賀県", "kana": "しがけん", "region": "近畿"}, {"name": "京都府", "kana": "きょうとふ", "region": "近畿"}, {"name": "大阪府", "kana": "おおさかふ", "region": "近畿"}, {"name": "兵庫県", "kana": "ひょうごけん", "region": "近畿"}, {"name": "奈良県", "kana": "ならけん", "region": "近畿"}, {"name": "和歌山県", "kana": "わかやまけん", "region": "近畿"}, {"name": "鳥取県", "kana": "とっとりけん", "region": "中国"}, {"name": "島根県", "kana": "しまねけん", "region": "中国"}, {"name": "岡山県", "kana": "おかやまけん", "region": "中国"}, {"name": "広島県", "kana": "ひろしまけん", "region": "中国"}, {"name": "山口県", "kana": "やまぐちけん", "region": "中国"}, {"name": "徳島県", "kana": "とくしまけん", "region": "四国"}, {"name": "香川県", "kana": "かがわけん", "region": "四国"}, {"name": "愛媛県", "kana": "えひめけん", "region": "四国"}, {"name": "高知県", "kana": "こうちけん", "region": "四国"}, {"name": "福岡県", "kana": "ふくおかけん", "region": "九州・沖縄"}, {"name": "佐賀県", "kana": "さがけん", "region": "九州・沖縄"}, {"name": "長崎県", "kana": "ながさきけん", "region": "九州・沖縄"}, {"name": "熊本県", "kana": "くまもとけん", "region": "九州・沖縄"}, {"name": "大分県", "kana": "おおいたけん", "region": "九州・沖縄"}, {"name": "宮崎県", "kana": "みやざきけん", "region": "九州・沖縄"}, {"name": "鹿児島県", "kana": "かごしまけん", "region": "九州・沖縄"}, {"name": "沖縄県", "kana": "おきなわけん", "region": "九州・沖縄"}],STORAGE="sengoku_prefecture_47_oldipad_v1";
+var stage=0,enemyHp=60,enemyMaxHp=60,score=0,combo=0,cleared=0;
+var current=null,correct="",questionStart=0,timer=null,locked=false,soundOn=true;
+var audioCtx=null,bgmOn=false,bgmTimer=null,bgmStep=0;
+
+function $(id){return document.getElementById(id)}
+function load(){try{var s=JSON.parse(localStorage.getItem(STORAGE)||"null");if(s){stage=s.stage||0;score=s.score||0;cleared=s.cleared||0}}catch(e){}if(stage<0||stage>=PREFS.length)stage=0}
+function save(){try{localStorage.setItem(STORAGE,JSON.stringify({stage:stage,score:score,cleared:cleared}))}catch(e){}}
+function renderMap(){var html="",i,cl;for(i=0;i<PREFS.length;i++){cl="mcell ";if(i<stage)cl+="done ";if(i===stage)cl+="now ";if(i===12||i===25||i===26||i===46)cl+="boss ";html+='<div class="'+cl+'">'+(i+1)+'</div>'}$("map").innerHTML=html}
+function render(){var pct=Math.max(0,Math.round(enemyHp/enemyMaxHp*100));$("stageNo").innerHTML=(stage+1)+"/47";$("score").innerHTML=String(score);$("combo").innerHTML=String(combo);$("cleared").innerHTML=String(cleared);$("enemyName").innerHTML=(stage===46?"👑 ":"")+"第"+(stage+1)+"の城 主";$("hpBar").style.width=pct+"%";$("hpBar").style.background=pct>50?"#22c55e":(pct>25?"#eab308":"#ef4444");$("hpText").innerHTML="HP "+Math.max(0,enemyHp)+" / "+enemyMaxHp;renderMap();drawSamurai();$("bgm").innerHTML=bgmOn?"🎵 BGM ON":"🎵 BGM OFF";$("bgm").className=bgmOn?"small on":"small";$("sound").innerHTML=soundOn?"🔊 SE ON":"🔇 SE OFF"}
+function startStage(i){stage=i;enemyMaxHp=(i%10===9?100:(i===46?150:60));enemyHp=enemyMaxHp;combo=0;$("stageClear").style.display="none";render();newQuestion();save()}
+function newQuestion(){
+ locked=false;current=PREFS[stage];
+ var mode=Math.floor(Math.random()*3),prompt="",sub="";
+ if(mode===0){$("mode").innerHTML="① よみかたから えらぼう";prompt=current.kana;sub="この なまえの 都道府県(とどうふけん)は？";correct=current.name}
+ else if(mode===1){$("mode").innerHTML="② かんじを よもう";prompt=current.name;sub="ただしい よみかたは どれ？";correct=current.kana}
+ else{$("mode").innerHTML="③ ちほうを おぼえよう";prompt=current.name;sub="この 都道府県(とどうふけん)は どの ちほう？";correct=current.region}
+ $("question").innerHTML=prompt;$("kana").innerHTML=sub;makeChoices(mode);questionStart=(new Date()).getTime();if(timer)clearInterval(timer);timer=setInterval(updateTimer,80);updateTimer();
+}
+function makeChoices(mode){
+ var vals=[correct],pool=[],i,j,t,v;
+ if(mode===0){for(i=0;i<PREFS.length;i++)if(PREFS[i].name!==correct)pool.push(PREFS[i].name)}
+ else if(mode===1){for(i=0;i<PREFS.length;i++)if(PREFS[i].kana!==correct)pool.push(PREFS[i].kana)}
+ else pool=["北海道","東北","関東","中部","近畿","中国","四国","九州・沖縄"];
+ while(vals.length<4){v=pool[Math.floor(Math.random()*pool.length)];if(vals.indexOf(v)<0)vals.push(v)}
+ for(i=vals.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=vals[i];vals[i]=vals[j];vals[j]=t}
+ var html="";for(i=0;i<4;i++)html+='<div class="answerCell"><button class="answer" data-v="'+vals[i]+'">'+vals[i]+'</button></div>';$("answers").innerHTML=html;
+ var bs=document.getElementsByClassName("answer");for(i=0;i<bs.length;i++){(function(b){b.onclick=function(){choose(b.getAttribute("data-v"),b)}})(bs[i])}
+}
+function updateTimer(){var sec=((new Date()).getTime()-questionStart)/1000,p=Math.max(0,100-sec*10);$("timeBar").style.width=p+"%";$("timeBar").style.background=sec<2?"#22c55e":(sec<4?"#eab308":(sec<6?"#f97316":"#ef4444"));$("speed").innerHTML=sec<2?"⚡ はやい！ 大ダメージのチャンス":(sec<4?"⚔️ まだ つよい こうげき！":"🏹 おちついて こたえよう")}
+function damage(sec){if(sec<2)return 30;if(sec<4)return 22;if(sec<6)return 16;return 10}
+function choose(v,btn){
+ if(locked)return;locked=true;if(timer)clearInterval(timer);var sec=((new Date()).getTime()-questionStart)/1000,bs=document.getElementsByClassName("answer"),i;for(i=0;i<bs.length;i++)bs[i].disabled=true;
+ if(v===correct){var d=damage(sec)+Math.min(10,combo*2);combo++;enemyHp-=d;score+=d*10;btn.style.background="#2e7d32";$("msg").innerHTML="⭕ せいかい！ "+sec.toFixed(1)+"びょう！<br>⚔️ "+d+" ダメージ！";showDamage("-"+d);playHit(d);render();if(enemyHp<=0)setTimeout(clearStage,650);else setTimeout(newQuestion,800)}
+ else{combo=0;btn.style.background="#777";$("msg").innerHTML="✖ おしい！ せいかいは「"+correct+"」<br>もういちど おぼえよう！";playMiss();setTimeout(newQuestion,1200)}
+}
+function clearStage(){cleared=Math.max(cleared,stage+1);fireworks(stage===46?180:70);playWin();$("stageText").innerHTML=current.name+"（"+current.kana+"）を せいは！<br>"+current.region+"地方<br>スコア "+score;$("stageClear").style.display="block";save()}
+function nextStage(){$("stageClear").style.display="none";if(stage>=PREFS.length-1){$("allClear").style.display="block";fireworks(220);return}startStage(stage+1)}
+function showDamage(txt){var d=document.createElement("div"),r=$("enemyCanvas").getBoundingClientRect();d.className="damage";d.innerHTML=txt;d.style.left=(r.left+r.width/2-25)+"px";d.style.top=(r.top+r.height/2)+"px";document.body.appendChild(d);var y=parseInt(d.style.top,10),born=(new Date()).getTime(),tm=setInterval(function(){var t=((new Date()).getTime()-born)/650;if(t>=1){clearInterval(tm);if(d.parentNode)d.parentNode.removeChild(d);return}d.style.top=(y-45*t)+"px";d.style.opacity=String(1-t)},30)}
+function px(c,x,y,w,h,col){c.fillStyle=col;c.fillRect(x,y,w,h)}
+function drawSamurai(){var cv=$("enemyCanvas"),c=cv.getContext("2d"),boss=(stage%10===9||stage===46),dark=stage>30;c.clearRect(0,0,80,80);c.imageSmoothingEnabled=false;
+ var armor=stage===46?"#4c1d95":(dark?"#7f1d1d":"#1e3a8a"),skin="#e7b98a",gold=boss?"#facc15":"#94a3b8";
+ px(c,26,11,28,18,armor);px(c,19,18,42,9,armor);px(c,31,7,18,7,gold);if(boss){px(c,20,4,6,12,gold);px(c,54,4,6,12,gold)}
+ px(c,28,29,24,19,skin);px(c,31,34,5,4,"#111");px(c,44,34,5,4,"#111");px(c,36,43,8,3,"#7c2d12");
+ px(c,21,48,38,22,armor);px(c,12,49,10,17,armor);px(c,58,49,10,17,armor);
+ px(c,17,70,18,7,"#111");px(c,45,70,18,7,"#111");px(c,63,38,4,30,gold);px(c,67,36,4,34,"#ddd")
+}
+/* audio */
+function getAudio(){if(audioCtx)return audioCtx;var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;try{audioCtx=new AC()}catch(e){audioCtx=null}return audioCtx}
+function unlockAudio(){var a=getAudio();if(!a)return;try{if(a.state==="suspended"&&a.resume)a.resume();var b=a.createBuffer(1,1,22050),s=a.createBufferSource();s.buffer=b;s.connect(a.destination);s.start(0)}catch(e){}}
+function tone(f,st,d,v,t){var a=getAudio(),o,g;if(!a)return;try{o=a.createOscillator();g=a.createGain();o.type=t||"square";o.frequency.value=f;g.gain.setValueAtTime(v,st);g.gain.exponentialRampToValueAtTime(.0001,st+d);o.connect(g);g.connect(a.destination);o.start(st);o.stop(st+d+.02)}catch(e){}}
+function playHit(d){if(!soundOn)return;var a=getAudio();if(a){tone(d>=30?880:650,a.currentTime+.01,.1,.05,"square");tone(d>=30?1320:900,a.currentTime+.10,.1,.035,"square")}}
+function playMiss(){if(!soundOn)return;var a=getAudio();if(a)tone(150,a.currentTime+.01,.15,.05,"sawtooth")}
+function playWin(){if(!soundOn)return;var a=getAudio(),N=[523,659,784,1046],i;if(a)for(i=0;i<N.length;i++)tone(N[i],a.currentTime+i*.1,.18,.05,"square")}
+function bgmTick(){var a=getAudio(),m=[220,261.63,293.66,329.63,293.66,261.63,246.94,220,196,246.94,293.66,392,329.63,293.66,261.63,246.94],b=[110,110,123.47,123.47,146.83,146.83,123.47,123.47],now;if(!a||!bgmOn)return;now=a.currentTime+.03;tone(m[bgmStep%m.length],now,.18,.018,"square");if(bgmStep%2===0)tone(b[Math.floor(bgmStep/2)%b.length],now,.32,.011,"triangle");bgmStep++}
+function startBgm(){unlockAudio();bgmOn=true;if(bgmTimer)clearInterval(bgmTimer);bgmStep=0;bgmTick();bgmTimer=setInterval(bgmTick,270);render()}
+function stopBgm(){bgmOn=false;if(bgmTimer){clearInterval(bgmTimer);bgmTimer=null}render()}
+function toggleBgm(){if(bgmOn)stopBgm();else startBgm()}
+function fireworks(n){var fx=$("fx"),cx=window.innerWidth/2,cy=window.innerHeight*.24,C=["#f66","#fd4","#5b7","#48e","#a6e"],i,e;for(i=0;i<n;i++){e=document.createElement("div");e.className="spark";e.style.background=C[i%5];e.style.left=cx+"px";e.style.top=cy+"px";fx.appendChild(e);(function(el,dx,dy,born){var tm=setInterval(function(){var t=((new Date()).getTime()-born)/900;if(t>=1){clearInterval(tm);if(el.parentNode)el.parentNode.removeChild(el);return}el.style.left=(cx+dx*t)+"px";el.style.top=(cy+dy*t)+"px";el.style.opacity=String(1-t)},30)})(e,Math.random()*600-300,80+Math.random()*400,(new Date()).getTime())}}
+
+$("nextStage").onclick=nextStage;$("again").onclick=function(){stage=0;score=0;cleared=0;$("allClear").style.display="none";startStage(0)};
+$("restart").onclick=function(){unlockAudio();if(confirm("さいしょから やりなおしますか？")){stage=0;score=0;cleared=0;startStage(0)}};
+$("sound").onclick=function(){unlockAudio();soundOn=!soundOn;render()};$("bgm").onclick=function(){unlockAudio();toggleBgm()};
+load();startStage(stage);
+})();
+</script>
+</body>
+</html>
